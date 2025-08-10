@@ -1,0 +1,64 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String // hashed
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  projectFor  String
+  description String
+  image       String // Can be a Media reference in future
+  techStack   Json // Store as JSON array of { name, icon }
+  projectType String
+  liveLink    String
+  features    String[] // Array of features
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SkillCategory {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  skills Skill[]
+}
+
+model Skill {
+  id         Int           @id @default(autoincrement())
+  name       String
+  icon       String
+  level      Int
+  categoryId Int
+  category   SkillCategory @relation(fields: [categoryId], references: [id])
+}
+
+model Education {
+  id             Int    @id @default(autoincrement())
+  year           String
+  title          String
+  institution    String
+  gpa            Float? // optional
+  certificateAtt String // URL to certificate image
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String // Stored file/image path or link
+  altText   String?
+  tag       String? // Optional label or usage tag (e.g. "project", "avatar")
+  createdAt DateTime @default(now())
+}
