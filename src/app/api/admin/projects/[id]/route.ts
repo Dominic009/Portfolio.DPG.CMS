@@ -2,19 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../../lib/prisma";
 
 // GET Unique
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } } // id is string from URL
-) {
-  const id = Number(params.id); // convert to number
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function GET(req: NextRequest, context: any) {
+  const { id } = context.params as { id: string };
+  const numericId = Number(id);
 
-  if (isNaN(id)) {
+  if (isNaN(numericId)) {
     return NextResponse.json({ error: "Invalid project ID" }, { status: 400 });
   }
 
   try {
     const project = await prisma.project.findUnique({
-      where: { id },
+      where: { id: numericId },
     });
 
     if (!project) {
@@ -29,20 +28,20 @@ export async function GET(
 }
 
 // DELETE
-export async function DELETE(
-  req: NextResponse,
-  { params }: { params: { id: string } }
-) {
-  const id = Number(params.id);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function DELETE(req: NextRequest, context: any) {
+  const { id } = context.params as { id: string };
+  const numericId = Number(id);
 
-  if (isNaN(id)) {
+  if (isNaN(numericId)) {
     return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
   }
 
   try {
     const deletedProject = await prisma.project.delete({
-      where: { id },
+      where: { id: numericId },
     });
+
     return NextResponse.json(
       { message: "Project has been deleted", deletedProject },
       { status: 200 }
