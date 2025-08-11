@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import AdminHeader from "@/component/Nav";
 import { authOptions } from "../../../../lib/auth";
+// import { AuroraTextEffect } from "@/components/lightswind/AuroraEffect";
+import { TypingText } from "@/components/lightswind/TypingText";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
@@ -11,9 +13,19 @@ export default async function Dashboard() {
   console.log(session);
 
   return (
-    <div>
+    <section className="min-h-screen ">
       <AdminHeader />
-      Welcome to Admin Dashboard, {session.user?.name}!
-    </div>
+      <div className="flex items-center justify-center h-[90vh]">
+        {/* <h1 className="text-5xl font-bold">Welcome to Admin Dashboard, {session.user?.name}!</h1> */}
+        {/* <AuroraTextEffect
+          text={`Welcome to Admin Dashboard, ${session.user?.name}!`}
+        /> */}
+        <TypingText>
+          <h1 className="text-5xl font-bold">
+            Welcome to Admin Dashboard, {session.user?.name}!
+          </h1>
+        </TypingText>
+      </div>
+    </section>
   );
 }

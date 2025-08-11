@@ -27,7 +27,7 @@ export default function AdminLogin() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
       <motion.form
         onSubmit={handleSubmit}
-        className="flex w-full max-w-md flex-col gap-4 rounded-2xl bg-white/80 p-8 shadow-lg backdrop-blur-sm"
+        className="flex w-full max-w-md flex-col gap-4 rounded-2xl bg-white p-8 shadow-lg backdrop-blur-sm"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
