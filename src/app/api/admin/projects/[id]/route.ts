@@ -4,7 +4,7 @@ import { prisma } from "../../../../../../lib/prisma";
 // GET Unique
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(req: NextRequest, context: any) {
-  const { id } = context.params as { id: string };
+  const { id } = await context.params as { id: string };
   const numericId = Number(id);
 
   if (isNaN(numericId)) {
