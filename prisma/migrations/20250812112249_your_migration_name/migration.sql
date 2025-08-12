@@ -1,11 +1,13 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "public"."Admin" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "public"."User";
+    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "public"."Project" (
@@ -65,6 +67,9 @@ CREATE TABLE "public"."Media" (
 
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Admin_email_key" ON "public"."Admin"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "SkillCategory_name_key" ON "public"."SkillCategory"("name");

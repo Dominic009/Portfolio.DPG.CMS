@@ -16,7 +16,7 @@ export default function AdminHeader() {
     await signOut({ callbackUrl: "/" });
   };
 
-  const isLogin = pathname === "/admin";
+  const isLogin = pathname === "/";
   const userImage =
     session?.user?.image ||
     "https://ui-avatars.com/api/?name=User&background=1F2937&color=fff";
@@ -24,7 +24,7 @@ export default function AdminHeader() {
   if (isLogin) return null;
 
   return (
-    <header className="flex items-center justify-end py-2 px-6 relative">
+    <header className="flex items-center justify-end py-4 px-6 relative">
       {/* User Avatar + Hover Menu */}
       <div className="relative group">
         {/* Avatar */}
@@ -35,7 +35,16 @@ export default function AdminHeader() {
         />
 
         {/* Dropdown */}
-        <div className="absolute right-0 mt-2 w-40 bg-gray-900 border border-gray-700 rounded-lg shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transform transition-all duration-200 ease-out z-50">
+        {/* Dropdown */}
+        <div
+          className="
+    absolute right-0 top-full w-40
+    bg-gray-900 border border-gray-700 rounded-lg shadow-lg
+    opacity-0 scale-95 pointer-events-none
+    group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto
+    transform transition-all duration-200 ease-out z-50
+  "
+        >
           <div className="px-4 py-2 border-b border-gray-700">
             <p className="text-sm font-medium text-gray-200 truncate">
               {session?.user?.name || "User"}

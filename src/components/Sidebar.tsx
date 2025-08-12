@@ -13,8 +13,8 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { name: "Dashboard", icon: HomeIcon, href: "/admin/dashboard" },
   { name: "Projects", icon: UsersIcon, href: "/admin/projects" },
-  { name: "Analytics", icon: ChartBarIcon, href: "/admin/analytics" },
-  { name: "Settings", icon: Cog6ToothIcon, href: "/admin/settings" },
+  // { name: "Analytics", icon: ChartBarIcon, href: "/admin/analytics" },
+  // { name: "Settings", icon: Cog6ToothIcon, href: "/admin/settings" },
 ];
 
 interface SidebarProps {
@@ -24,7 +24,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
-  const isLogin = pathname === "/admin";
+  const isLogin = pathname === "/";
 
   if (isLogin) return null; // avoid unnecessary nesting
 
@@ -75,10 +75,10 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
             {navItems.map(({ name, icon: Icon, href }) => {
               const isActive = pathname === href;
               return (
-                <li key={name} className="group">
+                <li key={name}>
                   <a
                     href={href}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200
+                    className={`group flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200
       ${
         isActive
           ? "bg-indigo-600 text-white font-semibold"
@@ -94,13 +94,12 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                     />
                     {isOpen && <span className="text-sm">{name}</span>}
 
-                    {/* Tooltip when collapsed */}
                     {!isOpen && (
                       <span
-                        className={`absolute ml-0 group-hover:ml-12 
-                   px-3 py-1 bg-gray-900 ${isActive ? "text-indigo-400" : "text-white"} text-sm rounded shadow-lg
-                   opacity-0 group-hover:opacity-100 whitespace-nowrap
-                   transition-all duration-200 ease-out z-50`}
+                        className={`absolute ml-12
+          px-3 py-1 bg-gray-900 ${isActive ? "text-indigo-400" : "text-white"} 
+          text-sm rounded shadow-lg hidden group-hover:block 
+          whitespace-nowrap transition-all duration-200 ease-out z-50 animate__animated animate__fadeInLeft animate__faster`}
                       >
                         {name}
                       </span>

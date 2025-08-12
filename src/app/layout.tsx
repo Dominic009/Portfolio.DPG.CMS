@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
+import "animate.css"
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lexend.className} antialiased bg-white min-h-screen`}>
+      <body className={`${lexend.className} antialiased min-h-screen`}>
         {children}
       </body>
     </html>

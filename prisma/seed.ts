@@ -195,7 +195,7 @@ async function main() {
       title: "EchelonRealty",
       projectFor: "Personal project",
       description:
-        "A project for real-estate company for showcasing their locations and services...",
+        "A project for real-estate company for showcasing their locations and services. This was made with React and for database, Firebase was used and also it has user login and registration",
       image: "/Project/Echelon.png",
       techStack: [
         { name: "React", icon: "skill-icons:react-dark" },
@@ -216,8 +216,8 @@ async function main() {
       title: "Chefs Table",
       projectFor: "Personal project",
       description:
-        "This project idea came to me when one of my friend wanted to start a restaurant...",
-      image: "/Project/ChefsTable.png",
+        "This project idea came to me when one of my friend wanted to start a restaurant and told me about the idea and how he wanted to manage his food ordering",
+      image: "https://i.ibb.co.com/G4ydRGbM/Chefs-Table.png",
       techStack: [
         { name: "React", icon: "skill-icons:react-dark" },
         { name: "Tailwind", icon: "skill-icons:tailwindcss-dark" },
@@ -232,17 +232,18 @@ async function main() {
       ],
     },
     {
-      title: "Ticket",
+      title: "Destination.com",
       projectFor: "Personal project",
-      description: "This was a personal project idea...",
-      image: "/Project/Ticket.com.png",
+      description:
+        "This was a personal project idea which I did when I started learning JavaScript and simple validations.",
+      image: "https://i.ibb.co.com/sdbsMCtK/Destination-com.png",
       techStack: [
         { name: "HTML5", icon: "vscode-icons:file-type-html" },
         { name: "CSS3", icon: "vscode-icons:file-type-css" },
         { name: "JavaScript", icon: "logos:javascript" },
       ],
       projectType: "UI/UX",
-      liveLink: "https://dominic009.github.io/Ticket.com-Ass-5",
+      liveLink: "https://dominic009.github.io/Destination.com-Ass-2/",
       features: [
         "Service descriptions",
         "Contact information",
@@ -253,7 +254,8 @@ async function main() {
     {
       title: "Forum",
       projectFor: "Personal project",
-      description: "This was a personal project idea...",
+      description:
+        "This was a personal project idea which I did when I started learning JavaScript and simple validations.",
       image: "/Project/image copy.png",
       techStack: [
         { name: "HTML5", icon: "vscode-icons:file-type-html" },
@@ -270,9 +272,25 @@ async function main() {
       ],
     },
     {
+      title: "Ticket",
+      projectFor: "Personal project",
+      description:
+        "This was a personal project idea which I did when I started learning JavaScript and simple validations.",
+      image: "/Project/Ticket.com.png",
+      techStack: [
+        { name: "HTML5", icon: "vscode-icons:file-type-html" },
+        { name: "CSS3", icon: "vscode-icons:file-type-css" },
+        { name: "JavaScript", icon: "logos:javascript" },
+      ],
+      projectType: "Frontend",
+      liveLink: "https://dominic009.github.io/Ticket.com-Ass-5",
+      features: ["Service descriptions", "Responsive design", "Modern UI/UX"],
+    },
+    {
       title: "G3 architect",
       projectFor: "Personal project",
-      description: "This was a starter project...",
+      description:
+        "This was a starter project which i have built to learn designing and usage of CSS",
       image: "/Project/G3.png",
       techStack: [
         { name: "HTML5", icon: "vscode-icons:file-type-html" },
@@ -291,47 +309,7 @@ async function main() {
       title: "Wander Quest",
       projectFor: "Personal project",
       description:
-        "This site was made to use database (MongoDB) and Express.js...",
-      image: "/Project/wq1.png",
-      techStack: [
-        { name: "React", icon: "skill-icons:react-dark" },
-        { name: "Tailwind", icon: "skill-icons:tailwindcss-dark" },
-        { name: "Express.js", icon: "skill-icons:expressjs-light" },
-        { name: "MongoDB", icon: "skill-icons:mongodb" },
-      ],
-      projectType: "Full Stack",
-      liveLink: "https://wanderquestfs.netlify.app",
-      features: [
-        "User login and registration",
-        "API's",
-        "Responsive design",
-        "Modern UI/UX",
-      ],
-    },
-    {
-      title: "Test project 01",
-      projectFor: "Personal project",
-      description: "This one is made to test delete",
-      image: "/Project/wq1.png",
-      techStack: [
-        { name: "React", icon: "skill-icons:react-dark" },
-        { name: "Tailwind", icon: "skill-icons:tailwindcss-dark" },
-        { name: "Express.js", icon: "skill-icons:expressjs-light" },
-        { name: "MongoDB", icon: "skill-icons:mongodb" },
-      ],
-      projectType: "Full Stack",
-      liveLink: "https://wanderquestfs.netlify.app",
-      features: [
-        "User login and registration",
-        "API's",
-        "Responsive design",
-        "Modern UI/UX",
-      ],
-    },
-    {
-      title: "Test project 02",
-      projectFor: "Personal project",
-      description: "This one is made to test delete",
+        "This site was made to use database (MongoDB) and Express.js on the server side and React.js in the front. This was basically a personal project made with MERN stack.",
       image: "/Project/wq1.png",
       techStack: [
         { name: "React", icon: "skill-icons:react-dark" },
@@ -349,6 +327,7 @@ async function main() {
       ],
     },
   ];
+
   for (const project of projects) {
     const existing = await prisma.project.findFirst({
       where: {
