@@ -7,6 +7,7 @@ import {
   MdRemoveCircle,
 } from "react-icons/md";
 import ConfirmModal from "./ConfirmationModal";
+import Link from "next/link";
 
 interface ProjectItemProps {
   projects: ProjectProps[];
@@ -20,25 +21,28 @@ const ProjectTable = ({
   removeProject,
 }: ProjectItemProps) => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | number | null>(null);
+  // const [selectedId, setSelectedId] = useState<string | number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectProps | null>(
+    null
+  );
 
-  const handleDeleteClick = (id: string | number) => {
-    setSelectedId(id);
+  const handleDeleteClick = (project: ProjectProps) => {
+    setSelectedProject(project);
     setShowModal(true);
   };
 
   const confirmDelete = () => {
-    if (selectedId !== null) {
-      removeProject(selectedId);
+    if (selectedProject) {
+      removeProject(selectedProject.id);
     }
     setShowModal(false);
-    setSelectedId(null);
+    setSelectedProject(null);
   };
 
   return (
     <div>
       <table className="min-w-full table-auto">
-        <thead className="bg-gradient-to-r from-gray-700 to-indigo-900 text-gray-300 uppercase text-sm">
+        <thead className="bg-teal-700 text-gray-300 uppercase text-sm">
           <tr>
             <th className="py-3 px-5 text-left w-5">SL</th>
             <th className="py-3 px-5 text-center">Preview</th>
@@ -85,15 +89,17 @@ const ProjectTable = ({
                 </a>
               </td>
               <td className="py-4 px-5 text-center space-x-3">
+                <Link href={`/admin/projects/edit/${project.id}`}>
+                  <button
+                    // onClick={() => handleProject(project.id)}
+                    title="Edit"
+                    className="px-3 py-2 rounded-md text-indigo-400 hover:brightness-110 transition cursor-pointer hover:scale-105 hover:bg-indigo-700 hover:text-white"
+                  >
+                    <MdEditSquare size={20} />
+                  </button>
+                </Link>
                 <button
-                  onClick={() => handleProject(project.id)}
-                  title="Edit"
-                  className="px-3 py-2 rounded-md text-indigo-300 hover:brightness-110 transition cursor-pointer hover:scale-105 hover:bg-indigo-700 hover:text-white"
-                >
-                  <MdEditSquare size={20} />
-                </button>
-                <button
-                  onClick={() => handleDeleteClick(project.id)}
+                  onClick={() => handleDeleteClick(project)}
                   title="Delete"
                   className="px-3 py-2 rounded-md text-red-500 hover:brightness-110 transition cursor-pointer hover:scale-105 hover:bg-indigo-700 hover:text-white"
                 >
@@ -108,6 +114,15 @@ const ProjectTable = ({
       {/* Confirmation modal */}
       <ConfirmModal
         isOpen={showModal}
+        message={
+          <>
+            Are you sure you want to delete{" "}
+            <span className="font-bold text-teal-400 text-lg">
+              {selectedProject?.title}
+            </span>{" "}
+            ?
+          </>
+        }
         onConfirm={confirmDelete}
         onCancel={() => setShowModal(false)}
       />

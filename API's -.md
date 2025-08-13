@@ -1,8 +1,9 @@
 API's -
 
 > GET :
-> [http:](http://localhost:3001/api/admin/projects)
-> Unique: http://localhost:3001/api/admin/projects/id
+> [http:](http://localhost:3000/api/admin/projects)
+> Unique: http://localhost:3000/api/admin/projects/id
+> Delete: http://localhost:3000/api/admin/projects
 
 DATABASE_URL="postgresql://postgres:dominic_009@localhost:5432/porfolio_db_v2"
 ADMIN_PASSWORD=dominic123

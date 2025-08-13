@@ -16,3 +16,7 @@ export async function getProjectById(id: string | number) {
 export async function deleteProjectById(id: string | number) {
   return api.delete(apiRoutes.admin.projectById(id));
 }
+
+export async function updateProject(id: string | number, data: object) {
+  return api.patch(apiRoutes.admin.projectById(id), data);
+}

@@ -1,20 +1,26 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import PreviousPage from "@/components/ui/PreviousPage";
-import React, { useState } from "react";
-import axios from "axios";
 import ImageUpload from "@/components/ui/ImageUploader";
-import { createProject } from "@/app/api/admin/adminApi";
-import toast from "react-hot-toast";
+import PreviousPage from "@/components/ui/PreviousPage";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
+import { useParams } from "next/navigation";
+import { getProjectById, updateProject } from "@/app/api/admin/adminApi";
+import toast from "react-hot-toast";
 
 interface TechStackItem {
   name: string;
   icon: string;
 }
 
-const AddProject = () => {
+// interface EditProps {
+//   project: string | number;
+// }
+
+const EditProject = () => {
   const imgbbApiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+  const { id } = useParams() as { id: string }; // dynamic route param
+
   const [title, setTitle] = useState("");
   const [projectFor, setProjectFor] = useState("");
   const [description, setDescription] = useState("");
@@ -29,36 +35,28 @@ const AddProject = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Upload image to imgbb
-  //   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const file = e.target.files?.[0];
-  //     if (!file) return;
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const res = await getProjectById(`${id}`);
+        const project = res.data;
 
-  //     setLoading(true);
+        setTitle(project.title);
+        setProjectFor(project.projectFor);
+        setDescription(project.description);
+        setImageUrl(project.image);
+        setTechStack(project.techStack || []);
+        setProjectType(project.projectType);
+        setLiveLink(project.liveLink);
+        setFeatures(project.features || []);
+      } catch (err) {
+        console.error("Error fetching project:", err);
+      }
+    };
 
-  //     const formData = new FormData();
-  //     formData.append("image", file);
+    if (id) fetchProject();
+  }, [id]);
 
-  //     try {
-  //       const res = await fetch(
-  //         `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
-  //         {
-  //           method: "POST",
-  //           body: formData,
-  //         }
-  //       );
-  //       const data = await res.json();
-  //       if (data.success) {
-  //         setImageUrl(data.data.url);
-  //       } else {
-  //         alert("Image upload failed");
-  //       }
-  //     } catch (error) {
-  //       console.error("Upload error:", error);
-  //       alert("Image upload error");
-  //     }
-  //     setLoading(false);
-  //   };
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -131,10 +129,9 @@ const AddProject = () => {
   };
 
   // Submit handler
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Prepare data object (example)
     const projectData = {
       title,
       projectFor,
@@ -145,32 +142,18 @@ const AddProject = () => {
       liveLink,
       features,
     };
-    const resetForm = () => {
-      setTitle("");
-      setProjectFor("");
-      setDescription("");
-      setImageUrl("");
-      setTechStack([]);
-      setTechName("");
-      setTechIcon("");
-      setProjectType("");
-      setLiveLink("https://");
-      setFeatures([]);
-      setFeatureInput("");
-      setUploadProgress(0);
-      setLoading(false);
-    };
 
-    console.log("Submitting project data:", projectData);
-
-    createProject(projectData).then((res) => {
-      if (res.status == 201) {
+    try {
+      const res = await updateProject(id, projectData);
+      if (res.status === 200) {
         toast.success(res.data.message);
-        resetForm();
       } else {
-        return toast.error(res.data.message);
+        toast.error(res.data?.error || "Something went wrong");
       }
-    });
+    } catch (err) {
+      console.error("Update failed:", err);
+      toast.error("Server error");
+    }
   };
 
   const handleRemoveImage = () => {
@@ -185,7 +168,7 @@ const AddProject = () => {
         <div className="flex items-center gap-2">
           <h3 className="text-xl text-gray-300">Projects</h3>
           <TbArrowBadgeRightFilled size={25} className="text-indigo-500" />
-          <h1 className="text-2xl font-semibold underline">Add new project</h1>
+          <h1 className="text-2xl font-semibold underline">Edit project</h1>
         </div>
       </div>
 
@@ -411,11 +394,11 @@ const AddProject = () => {
           disabled={loading}
           className="w-full bg-teal-500 text-white font-semibold py-3 rounded-md hover:bg-teal-600 transition col-span-2"
         >
-          {loading ? "Uploading..." : "Create Project"}
+          {loading ? "Uploading..." : "Save changes"}
         </button>
       </form>
     </div>
   );
 };
 
-export default AddProject;
+export default EditProject;

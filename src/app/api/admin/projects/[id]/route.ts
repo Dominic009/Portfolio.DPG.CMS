@@ -51,3 +51,31 @@ export async function DELETE(req: NextRequest, context: any) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+
+
+// Edit
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function PATCH(req: NextRequest, context: any) {
+  const { id } = context.params as { id: string };
+  const numericId = Number(id);
+
+  if (isNaN(numericId)) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+  }
+
+  try {
+    const body = await req.json();
+    const updateInformation = await prisma.project.update({
+      where: { id: numericId },
+      data: body,
+    });
+
+    return NextResponse.json(
+      { message: "Project has been updated", updateInformation },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Update project failed:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
