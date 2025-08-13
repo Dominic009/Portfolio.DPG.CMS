@@ -42,20 +42,20 @@ export default function AdminProjects() {
     getProjectById(id).then((res) => console.log(res));
   };
 
-  const addProject = async (data: object) => {
-    try {
-      const res = await createProject(data);
-      console.log(res.data);
-      // Refresh projects list
-      setLoading(true);
-      const updated = await getAllProjects();
-      setProjects(updated.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const addProject = async (data: object) => {
+  //   try {
+  //     const res = await createProject(data);
+  //     console.log(res.data);
+  //     // Refresh projects list
+  //     setLoading(true);
+  //     const updated = await getAllProjects();
+  //     setProjects(updated.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const removeProject = (id: string | number) => {
     try {
